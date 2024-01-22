@@ -1,4 +1,4 @@
-package com.bartosznowacki.apigateway;
+package com.bartosznowacki.app.apigateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

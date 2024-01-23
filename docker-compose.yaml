@@ -2,7 +2,7 @@ version: '3.7'
 services:
   mysql:
     container_name: app-mysql
-    image: mysql
+    image: mysql:8.0
     restart: unless-stopped
     env_file: ./.env
     environment:

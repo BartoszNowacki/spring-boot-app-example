@@ -1,6 +1,7 @@
 package com.bartosznowacki.app.authservice.security;
 
 import com.bartosznowacki.app.authservice.jwt.IJwtService;
+import com.bartosznowacki.app.authservice.token.ITokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
@@ -24,13 +25,14 @@ import java.util.Optional;
 class JwtTokenFilter extends OncePerRequestFilter {
     private final IJwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final ITokenService tokenService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull jakarta.servlet.http.HttpServletResponse response,
                                     @NonNull jakarta.servlet.FilterChain chain
     ) throws jakarta.servlet.ServletException, IOException {
-        if (validateTokenHeader(request) && validateToken(request)) {
+        if (validateTokenHeader(request) && validateToken(request) && validateTokenInDB(request)) {
             applyAuthenticationToSecurityContext(request);
         }
         chain.doFilter(request, response);
@@ -45,6 +47,11 @@ class JwtTokenFilter extends OncePerRequestFilter {
     private boolean validateToken(jakarta.servlet.http.HttpServletRequest request) {
         final String jwt = getJwt(request);
         return jwtService.validate(jwt);
+    }
+
+    private boolean validateTokenInDB(jakarta.servlet.http.HttpServletRequest request) {
+        final String jwt = getJwt(request);
+        return tokenService.validateTokenInDB(jwt);
     }
 
     private void applyAuthenticationToSecurityContext(HttpServletRequest request) {

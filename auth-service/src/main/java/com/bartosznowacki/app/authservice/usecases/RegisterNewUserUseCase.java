@@ -3,6 +3,7 @@ package com.bartosznowacki.app.authservice.usecases;
 import com.bartosznowacki.app.authservice.auth.requests.RegisterRequest;
 import com.bartosznowacki.app.authservice.auth.responses.SignInResponse;
 import com.bartosznowacki.app.authservice.jwt.IJwtService;
+import com.bartosznowacki.app.authservice.token.ITokenService;
 import com.bartosznowacki.app.authservice.user.ISecurityUserService;
 import com.bartosznowacki.app.authservice.user.SecurityUser;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 public class RegisterNewUserUseCase {
     private final ISecurityUserService securityUserService;
     private final IJwtService jwtService;
+    private final ITokenService tokenService;
     private final PasswordEncoder passwordEncoder;
 
     public ResponseEntity<SignInResponse> execute(RegisterRequest request) {
@@ -26,8 +28,9 @@ public class RegisterNewUserUseCase {
                 .active(true)
                 .role(request.getRole())
                 .build();
-        securityUserService.saveUser(user);
         final String token = jwtService.generateToken(user);
+        securityUserService.saveUser(user);
+        tokenService.saveUserToken(user, token);
         final SignInResponse response = SignInResponse.builder()
                 .accessToken(token)
                 .build();

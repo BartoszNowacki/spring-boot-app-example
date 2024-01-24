@@ -15,5 +15,7 @@ public interface ISecurityUserService {
 
     SecurityUser findUserAndCheckPassword(String username, String password) throws BadCredentialsException;
 
-    LoggedUserDto getLoggedSecurityUserDetails();
+    LoggedUserDto getLoggedUser();
+
+    SecurityUser getLoggedSecurityUser();
 }

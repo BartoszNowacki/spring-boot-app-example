@@ -13,7 +13,7 @@ public class CheckUserUseCase {
     private final ISecurityUserService securityUserService;
 
     public ResponseEntity<CheckUserResponse> execute() {
-        final LoggedUserDto user = securityUserService.getLoggedSecurityUserDetails();
+        final LoggedUserDto user = securityUserService.getLoggedUser();
         final CheckUserResponse response = CheckUserResponse.builder()
                 .userID(user.getId())
                 .role(user.getRoleType().name())

@@ -49,7 +49,7 @@ class SecurityUserService implements ISecurityUserService {
         }
     }
 
-    public LoggedUserDto getLoggedSecurityUserDetails() {
+    public LoggedUserDto getLoggedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser securityUser = (SecurityUser) loadUserByUsername(authentication.getName());
         return LoggedUserDto.builder()
@@ -57,5 +57,10 @@ class SecurityUserService implements ISecurityUserService {
                 .username(securityUser.getUsername())
                 .roleType(securityUser.getRole())
                 .build();
+    }
+
+    public SecurityUser getLoggedSecurityUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (SecurityUser) loadUserByUsername(authentication.getName());
     }
 }

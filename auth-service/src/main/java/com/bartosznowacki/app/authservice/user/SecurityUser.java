@@ -1,6 +1,7 @@
 package com.bartosznowacki.app.authservice.user;
 
 import com.bartosznowacki.app.authservice.shared.Role;
+import com.bartosznowacki.app.authservice.token.Token;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import static com.google.common.collect.Sets.newHashSet;
@@ -21,7 +23,7 @@ import static com.google.common.collect.Sets.newHashSet;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "\"security_user\"")
+@Table(name = "_user")
 public class SecurityUser implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +38,9 @@ public class SecurityUser implements UserDetails {
     private boolean active;
 
     private boolean disabled;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     @Column(name = "activation_date")
     private LocalDateTime activationDate;

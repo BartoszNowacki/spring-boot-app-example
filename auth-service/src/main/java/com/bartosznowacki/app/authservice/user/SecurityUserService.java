@@ -54,7 +54,6 @@ class SecurityUserService implements ISecurityUserService {
         SecurityUser securityUser = (SecurityUser) loadUserByUsername(authentication.getName());
         return LoggedUserDto.builder()
                 .id(Math.toIntExact(securityUser.getId()))
-                .username(securityUser.getUsername())
                 .roleType(securityUser.getRole())
                 .build();
     }

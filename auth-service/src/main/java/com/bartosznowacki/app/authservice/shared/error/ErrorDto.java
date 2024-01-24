@@ -1,4 +1,4 @@
-package com.bartosznowacki.app.authservice.shared;
+package com.bartosznowacki.app.authservice.shared.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

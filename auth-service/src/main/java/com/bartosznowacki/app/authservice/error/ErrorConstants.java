@@ -1,4 +1,4 @@
-package com.bartosznowacki.app.authservice.shared;
+package com.bartosznowacki.app.authservice.error;
 
 public class ErrorConstants {
     static public String ERROR_BAD_CREDENTIALS_CODE = "ERROR_BAD_CREDENTIALS_CODE";

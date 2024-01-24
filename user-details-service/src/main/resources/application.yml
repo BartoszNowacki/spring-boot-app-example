@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: user-details
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_SID:app}?allowPublicKeyRetrieval=true&useSSL=false
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+
+server:
+  port: 8981
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
